@@ -1,11 +1,12 @@
 - [shell in practice](#shell-in-practice)
-	- [date](#date)
-	- [随机字符串生成](#随机字符串生成)
-		- [`tr` 命令](#tr-命令)
-		- [生成随机数字](#生成随机数字)
-	- [处理文件内容并排序](#处理文件内容并排序)
-	- [统计正在连接的IP地址](#统计正在连接的ip地址)
-	- [PS查看进程，并过滤grep](#ps查看进程并过滤grep)
+  - [date](#date)
+  - [随机字符串生成](#随机字符串生成)
+    - [`tr` 命令](#tr-命令)
+    - [生成随机数字](#生成随机数字)
+  - [处理文件内容并排序](#处理文件内容并排序)
+  - [统计正在连接的IP地址](#统计正在连接的ip地址)
+  - [PS查看进程，并过滤grep](#ps查看进程并过滤grep)
+  - [如何shell添加多行字符或者变量值](#如何shell添加多行字符或者变量值)
 
 # shell in practice
 
@@ -129,3 +130,29 @@ else
 fi
 ```
 
+## 如何shell添加多行字符或者变量值
+
+```bash
+# possibility 1:
+echo "line 1" >> greetings.txt
+echo "line 2" >> greetings.txt
+
+# possibility 2:
+echo "line 1
+line 2" >> greetings.txt
+
+# possibility 3:
+cat <<EOT >> greetings.txt
+line 1
+line 2
+EOT
+
+# possibility 4:
+echo "line 1" | sudo tee -a greetings.txt > /dev/null
+
+# possibility 3:
+sudo tee -a greetings.txt > /dev/null <<EOT
+line 1
+line 2
+EOT
+```
