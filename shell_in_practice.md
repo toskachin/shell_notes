@@ -7,6 +7,10 @@
   - [统计正在连接的IP地址](#统计正在连接的ip地址)
   - [PS查看进程，并过滤grep](#ps查看进程并过滤grep)
   - [如何shell添加多行字符或者变量值](#如何shell添加多行字符或者变量值)
+  - [grep 常用](#grep-常用)
+  - [declare用法](#declare用法)
+  - [打印数字seq](#打印数字seq)
+  - [script交互](#script交互)
 
 # shell in practice
 
@@ -155,4 +159,108 @@ sudo tee -a greetings.txt > /dev/null <<EOT
 line 1
 line 2
 EOT
+```
+
+
+## grep 常用
+
+```bash
+
+egrep -A 5 keyword txt   //向下5行
+egrep -B 5 keyword txt   //向上5行
+egrep -C 5 keyword txt   //显示上下5行
+
+grep -w keyword  //精确匹配
+grep -v keyword  //反向匹配
+
+```
+
+## declare用法
+
+*选项*
+* +/-："-"可用来指定变量的属性，"+"则是取消变量所设的属性；
+* -f：仅显示函数；
+* r：将变量设置为只读；
+* x：指定的变量会成为环境变量，可供shell以外的程序来使用；
+* i：[设置值]可以是数值，字符串或运算式。
+
+```bash
+declare test='ywnz.com'    #定义并初始化shell变量
+
+echo $test
+```
+
+## 打印数字seq
+
+```bash
+[root@101]# for i in `seq 01 09`;do echo $i;done
+1
+2
+3
+4
+5
+6
+7
+8
+9
+[root@101]# for i in `seq -w 1 23`;do echo $i;done
+01
+02
+03
+04
+05
+06
+07
+08
+09
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+```
+## script交互
+
+```bash
+#!/bin/bash
+
+read -r -p "Are You Sure? [Y/n] " input
+
+case $input in
+    [yY][eE][sS]|[yY])
+		echo "Yes"
+		;;
+
+    [nN][oO]|[nN])
+		echo "No"
+       	;;
+
+    *)
+		echo "Invalid input..."
+		exit 1
+		;;
+esac
+```
+
+```bash
+#!/bin/bash
+# init
+function pause(){
+   read -p "$*"
+}
+ 
+# ...
+# call it
+pause 'Press [Enter] key to continue...'
+# rest of the script
+# ...
 ```
