@@ -11,6 +11,7 @@
   - [declare用法](#declare用法)
   - [打印数字seq](#打印数字seq)
   - [script交互](#script交互)
+  - [grep和Egrep的用法](#grep和egrep的用法)
 
 # shell in practice
 
@@ -263,4 +264,45 @@ function pause(){
 pause 'Press [Enter] key to continue...'
 # rest of the script
 # ...
+```
+
+## grep和Egrep的用法
+
+
+* egrep和grep -E是等效的，egrep相比grep对正则表达式有了一些扩展支持，具体包括一下几点（其实这些特性grep是可以用的，只不过要在元字符前面加上转义符，比如用到+时，应敲入\+）：
+```
++：匹配一个或多个先前的字符。如：'[a-z]+able’，匹配一个或多个小写字母后跟able的串，如loveable,enable,disable等。
+
+?：匹配零个或多个先前的字符。如：’gr?p’匹配gr后跟一个或没有字符，然后是p的行。
+
+a|b|c :匹配a或b或c。如：grep|sed匹配grep或sed
+
+():分组符号，如：love(able|rs)ov+匹配loveable或lovers，匹配一个或多个v。
+
+x{m},x{m,},x{m,n}:作用同x\{m\},x\{m,\},x\{m,n\}
+```
+
+* grep还支持一些POSIX字符类，也一并记录如下吧，虽然平时应该不大可能用到：
+```
+[:alnum:]：文字数字字符
+
+[:alpha:]：文字字符
+
+[:digit:]：数字字符
+
+[:graph:]：非空字符（非空格、控制字符）
+
+[:lower:]：小写字符
+
+[:cntrl:]：控制字符
+
+[:print:]：非空字符（包括空格）
+
+[:punct:]：标点符号
+
+[:space:]：所有空白字符（新行，空格，制表符）
+
+[:upper:]：大写字符
+
+[:xdigit:]：十六进制数字（0-9，a-f，A-F）
 ```
